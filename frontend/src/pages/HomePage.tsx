@@ -1,10 +1,27 @@
-interface HomePageProps {
-    className?: string
-}
+import { useChatStore } from "../store/useChatStore";
+import { Sidebar, NoChatSelected, ChatContainer } from "../components";
+import { SidebarSkeleton } from "../components";
+import { useEffect } from "react";
 
-export const HomePage:React.FC<HomePageProps> = ({className}) => {
-    return (
-        <div className={className}>
+
+export const HomePage = () => {
+  const { selectedUser, isUsersLoading, getUsers } = useChatStore();
+
+    useEffect(() => {
+    getUsers();
+  }, [getUsers]);
+
+  return (
+    <div className="h-screen bg-base-200">
+      <div className="flex items-center justify-center pt-20 px-4">
+        <div className="bg-base-100 rounded-lg shadow-cl w-full max-w-6xl h-[calc(100vh-8rem)]">
+          <div className="flex h-full rounded-lg overflow-hidden">
+            {isUsersLoading ? <SidebarSkeleton /> : <Sidebar />}
+
+            {!selectedUser ? <NoChatSelected /> : <ChatContainer />}
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};

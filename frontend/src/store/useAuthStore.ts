@@ -21,6 +21,8 @@ interface AuthState {
     signUp: () => Promise<void>,
     logOut: () => Promise<void>,
     logIn: () => Promise<void>,
+    getUsers: () => Promise<void>,
+
 
 }
 
@@ -29,8 +31,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     isSigningUp: false,
     isLoggingIn: false,
     isUpdatingProfile: false,
-
     isCheckingAuth: true,
+    onlineUsers: [],
 
     checkAuth: async() => {
         try {
@@ -39,7 +41,7 @@ export const useAuthStore = create<AuthState>((set) => ({
             set({authUser: res.data})
 
         } catch (error) {
-            set((state) => ({authUser: null}))
+            set({authUser: null})
             console.log("Error in checkAuth store:", error)
 
         } finally {
@@ -77,6 +79,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         try {
            const res = await axiosInstance.post("/auth/login", data)
            set({authUser: res.data})
+           set({isOnline: true})
            toast.success("Logged in!")
         } catch (error) {
             toast.error(error.response.data.message)
@@ -98,5 +101,5 @@ export const useAuthStore = create<AuthState>((set) => ({
         } finally {
             set({isUpdatingProfile: false})
         }
-    }
+    },
 }))

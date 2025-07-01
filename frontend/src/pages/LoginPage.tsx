@@ -23,7 +23,7 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
     }
 
     // useEffect(() => {
-    //     logIn({email: "jdoe@gmail.com", password: "12113333"})
+    //     logIn({email: "jdoe@gmail.com", password: "1113333"})
     // }, [logIn])
 
     return (
@@ -79,6 +79,7 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
                   placeholder="••••••••"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  autoComplete="on"
                 />
                 <button
                   type="button"
@@ -104,9 +105,8 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
                 "Sign in"
               )}
             </button>
-          </form>
 
-          <div className="text-center">
+               <div className="text-center">
             <p className="text-base-content/60">
               Don&apos;t have an account?{" "}
               <Link to="/signup" className="link link-primary">
@@ -114,6 +114,10 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
               </Link>
             </p>
           </div>
+
+          </form>
+
+         
         </div>
       </div>
 

@@ -50,6 +50,7 @@ export const SignUpPage:React.FC<SignUpPageProps> = () => {
 
     return (
         <div className="min-h-screen grid lg:grid-cols-2">
+          
 
             {/* left side */}
         <div className="flex flex-col justify-center items-center p-6 sm:p-12">
@@ -62,6 +63,7 @@ export const SignUpPage:React.FC<SignUpPageProps> = () => {
               group-hover:bg-primary/20 transition-colors"
               >
                 <MessageSquare className="size-6 text-primary" />
+                <button className="btn btn-primary">Button</button>
               </div>
               <h1 className="text-2xl font-bold mt-2">Create Account</h1>
               <p className="text-base-content/60">Get started with your free account</p>
