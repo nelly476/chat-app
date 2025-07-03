@@ -13,17 +13,6 @@ export const User:React.FC<User> = ({user}) => {
    
   const { selectedUser, setSelectedUser, users } = useChatStore();
 
-    const {
-    _id,
-    fullName,
-    profilePic,
-} = user;
-
-
-    function handleClick () {
-        setSelectedUser(_id)
-        // console.log(messages)
-    }
 
 
     return (
