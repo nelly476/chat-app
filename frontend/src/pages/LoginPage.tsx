@@ -25,7 +25,8 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
     // useEffect(() => {
     //     logIn({email: "jdoe@gmail.com", password: "1113333"})
     // }, [logIn])
-    // n@m.com 
+    // n@m.com 111111
+    // lilo@mail.com 222222
 
     return (
         <div className="h-screen grid lg:grid-cols-2">

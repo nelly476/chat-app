@@ -1,5 +1,6 @@
-import profileImg from "../assets/react.svg"
 import { useChatStore } from "../store/useChatStore"
+import { useAuthStore } from "../store/useAuthStore"
+import profileImg from "../assets/avatar.png"
 
 type User = {
     email: string,
@@ -12,6 +13,7 @@ type User = {
 export const User:React.FC<User> = ({user}) => {
    
   const { selectedUser, setSelectedUser, users } = useChatStore();
+  const {onlineUsers} = useAuthStore()
 
 
 
@@ -27,11 +29,11 @@ export const User:React.FC<User> = ({user}) => {
           >
             <div className="relative mx-auto lg:mx-0">
               <img
-                src={user.profilePic || "/avatar.png"}
+                src={user.profilePic || profileImg}
                 alt={user.name}
                 className="size-12 object-cover rounded-full"
               />
-              {users.includes(user._id) && (
+              {onlineUsers.includes(user._id) && (
                 <span
                   className="absolute bottom-0 right-0 size-3 bg-green-500 
                   rounded-full ring-2 ring-zinc-900"
@@ -43,7 +45,7 @@ export const User:React.FC<User> = ({user}) => {
             <div className="hidden lg:block text-left min-w-0">
               <div className="font-medium truncate">{user.fullName}</div>
               <div className="text-sm text-zinc-400">
-                {users.includes(user._id) ? "Online" : "Offline"}
+                {onlineUsers.includes(user._id) ? "Online" : "Offline"}
               </div>
             </div>
           </button>

@@ -1,6 +1,7 @@
 import {create} from "zustand"
 import { axiosInstance } from "../lib/axios"
 import toast from "react-hot-toast"
+import { io } from "socket.io-client"
 
 type User = {
     email: string,
@@ -26,19 +27,24 @@ interface AuthState {
 
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+const BASE_URL = "http://localhost:5001"
+
+export const useAuthStore = create<AuthState>((set, get) => ({
     authUser: null, 
     isSigningUp: false,
     isLoggingIn: false,
     isUpdatingProfile: false,
     isCheckingAuth: true,
     onlineUsers: [],
+    socket: null,
 
     checkAuth: async() => {
         try {
             const res = await axiosInstance.get("/auth/check")
 
             set({authUser: res.data})
+            get().connectSocket()
+
 
         } catch (error) {
             set({authUser: null})
@@ -55,6 +61,8 @@ export const useAuthStore = create<AuthState>((set) => ({
             const res = await axiosInstance.post("/auth/signup", data)
             set({authUser: res.data})
             toast.success("Account created successfully")
+            get().connectSocket()
+
         } catch (error) {
             toast.error(error.response.data.message)
             console.log(error)
@@ -68,6 +76,8 @@ export const useAuthStore = create<AuthState>((set) => ({
             await axiosInstance.post("/auth/logout")
             set({authUser: null})
             toast.success("Logged out")
+            get().disconnectSocket()
+
         } catch (error) {
             toast.error(error.response.data.message)
             console.log(error)
@@ -79,8 +89,8 @@ export const useAuthStore = create<AuthState>((set) => ({
         try {
            const res = await axiosInstance.post("/auth/login", data)
            set({authUser: res.data})
-           set({isOnline: true})
            toast.success("Logged in!")
+           get().connectSocket()
         } catch (error) {
             toast.error(error.response.data.message)
             console.log(error)
@@ -102,4 +112,24 @@ export const useAuthStore = create<AuthState>((set) => ({
             set({isUpdatingProfile: false})
         }
     },
+
+    connectSocket: () => {
+        const {authUser} = get()
+        if (!authUser || get().socket?.connected) return
+        const socket = io(BASE_URL, {
+            query: {
+                userId: authUser._id
+            }
+        });
+        set({socket: socket})
+
+        socket.on("getOnlineUsers", (userIds) => {
+            set({onlineUsers: userIds})
+        })
+        // socket.connect()
+    },
+
+    disconnectSocket: () => {
+       if (get().socket?.connected) get().socket.disconnect()
+    }
 }))

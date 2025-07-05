@@ -1,5 +1,5 @@
 import { useAuthStore } from "../store/useAuthStore"
-import profileImg from "../assets/react.svg"
+import profileImg from "../assets/avatar.png"
 import { Camera, User, Mail } from "lucide-react"
 import { useState } from "react"
 
@@ -20,6 +20,7 @@ export const ProfilePage:React.FC = () => {
         const base64Image = reader.result;
         setSelectedImg(base64Image)
         await updateProfile({profilePic: base64Image})
+        console.log(authUser, base64Image)
         
       }
     }
