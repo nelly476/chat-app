@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useAuthStore } from "../store/useAuthStore"
 import { MessageSquare, User, Mail, Lock, EyeOff, Eye, Loader2 } from "lucide-react"
 import { Link } from "react-router-dom"
@@ -41,7 +41,7 @@ export const SignUpPage:React.FC<SignUpPageProps> = () => {
 
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (validateForm()) {
          signUp(formData)

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useAuthStore } from "../store/useAuthStore"
 import { AuthImagePattern } from "../components"
 import { Link } from "react-router-dom"
@@ -17,7 +17,7 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
         password: "",
     })
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         logIn(formData)
     }

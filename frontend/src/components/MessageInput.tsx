@@ -5,13 +5,15 @@ import toast from "react-hot-toast";
 
 export const MessageInput = () => {
   const [text, setText] = useState("")
-  const [imagePreview, setImagePreview] = useState(null);
-  const fileInputRef = useRef(null)
+  const [imagePreview, setImagePreview] = useState<string | null | ArrayBuffer>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const {sendMessage} = useChatStore()
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0]
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
     if (!file.type.startsWith("image/")) {
       toast.error("The file you've selected is not an image")
       return
@@ -26,10 +28,10 @@ export const MessageInput = () => {
 
   const removeImage = () => {
     setImagePreview(null)
-    if (fileInputRef.current) fileInputRef.current.value = null  
+      if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
-  const handleSendMessage = async(e) => {
+  const handleSendMessage = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!text.trim() && !imagePreview) {
       return
@@ -56,7 +58,7 @@ export const MessageInput = () => {
         <div className="mb-3 flex items-center gap-2">
           <div className="relative">
             <img
-              src={imagePreview}
+              src={typeof imagePreview === "string" ? imagePreview : undefined}
               alt="Preview"
               className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
             />

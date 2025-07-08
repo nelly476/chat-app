@@ -9,23 +9,23 @@ import profileImg from "../assets/avatar.png"
 
 
 export const ChatContainer = () => {
-  const messageEndRef = useRef(null)
+  const messageEndRef = useRef<HTMLDivElement>(null)
 
 const {messages, getMessages, selectedUser, isMessagesLoading, 
 subscribeToMessages, unsubscribeFromMessages} = useChatStore()
 
 const {authUser} = useAuthStore()
 
-// console.log(authUser)
-
-
     useEffect(() => {
-        getMessages(selectedUser._id)
+      if (selectedUser?._id) {
+         getMessages(selectedUser?._id)
+
+      }
 
         subscribeToMessages()
 
         return unsubscribeFromMessages
-    }, [getMessages, selectedUser._id, subscribeToMessages, unsubscribeFromMessages])
+    }, [getMessages, selectedUser?._id, subscribeToMessages, unsubscribeFromMessages])
 
       useEffect(() => {
     if (messageEndRef.current && messages) {
@@ -58,11 +58,10 @@ const {authUser} = useAuthStore()
           >
             <div className=" chat-image avatar">
               <div className="size-10 rounded-full border">
-                <img
-                  src={
+                <img src={ 
                     message.senderId === authUser?._id
-                      ? authUser?.profilePic || {profileImg}
-                      : selectedUser.profilePic || {profileImg}
+                      ? authUser?.profilePic || profileImg
+                      : selectedUser?.profilePic || profileImg
                   }
                   alt="profile pic"
                 />

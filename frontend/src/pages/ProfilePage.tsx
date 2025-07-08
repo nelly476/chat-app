@@ -6,10 +6,10 @@ import { useState } from "react"
 
 export const ProfilePage:React.FC = () => {
     const {authUser, isUpdatingProfile, updateProfile} = useAuthStore()
-    const [selectedImg, setSelectedImg] = useState(null)
+    const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>(null)
 
-    const handleImageUpload = (e) => {
-      const file = e.target.files[0];
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
 
       if (!file) return;
 
@@ -40,7 +40,7 @@ export const ProfilePage:React.FC = () => {
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
-                src={selectedImg || authUser?.profilePic || profileImg}
+                src={typeof selectedImg === "string" ? selectedImg : authUser?.profilePic ?? profileImg}
                 alt="Profile"
                 className="size-32 rounded-full object-cover border-4 "
               />
