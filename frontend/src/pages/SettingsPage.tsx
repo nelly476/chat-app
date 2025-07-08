@@ -19,7 +19,7 @@ export const SettingsPage = () => {
         </div>
 
         <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
-          {THEMES.map((t) => (
+          {THEMES?.map((t) => (
             <button
               key={t}
               className={`
@@ -65,7 +65,7 @@ export const SettingsPage = () => {
 
                 {/* Chat Messages */}
                 <div className="p-4 space-y-4 min-h-[200px] max-h-[200px] overflow-y-auto bg-base-100">
-                  {PREVIEW_MESSAGES.map((message) => (
+                  {PREVIEW_MESSAGES?.map((message) => (
                     <div
                       key={message.id}
                       className={`flex ${message.isSent ? "justify-end" : "justify-start"}`}
