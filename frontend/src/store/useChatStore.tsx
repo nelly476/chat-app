@@ -67,9 +67,6 @@ export const useChatStore = create<ChatState>((set, get) => ({
             console.error(error);
             toast.error(error.response.data.message || "Ошибка загрузки пользователей");
 
-            // if (axios.isAxiosError(error)) {
-            //     toast.error(error.response?.data.message || "Ошибка загрузки сообщений");
-            // }
         } finally {
             set({ isMessagesLoading: false });
         }

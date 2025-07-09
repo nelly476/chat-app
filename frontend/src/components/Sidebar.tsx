@@ -12,9 +12,9 @@ export const Sidebar = () => {
 
   // useEffect(() => {
   //   getUsers()
-  //   console.log(filteredUsers)
+  //   console.log(users)
   // }, []);
-  console.log(users)
+  // console.log(users)
 
   const filteredUsers = showOnlineOnly
     ? users.filter((user) => onlineUsers.includes(user._id))
