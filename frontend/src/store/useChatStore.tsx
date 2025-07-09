@@ -1,11 +1,10 @@
 import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
-import axios from "axios";
+// import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuthStore } from "./useAuthStore";
 import { Socket } from "socket.io-client";
 
-// Типы сообщений и пользователей
 export interface User {
     _id: string;
     fullName: string;
@@ -49,13 +48,11 @@ export const useChatStore = create<ChatState>((set, get) => ({
     getUsers: async () => {
         try {
             set({ isUsersLoading: true });
-            const res = await axiosInstance.get<User[]>("/message/users");
+            const res = await axiosInstance.get("/messages/users");
             set({ users: res.data });
-        } catch (error) {
+        } catch (error: any) {
             console.error(error);
-            if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data.message || "Ошибка загрузки пользователей");
-            }
+            toast.error(error.response.data.message || "Ошибка загрузки пользователей");
         } finally {
             set({ isUsersLoading: false });
         }
@@ -64,13 +61,15 @@ export const useChatStore = create<ChatState>((set, get) => ({
     getMessages: async (userId: string) => {
         set({ isMessagesLoading: true });
         try {
-            const res = await axiosInstance.get<Message[]>(`/message/${userId}`);
+            const res = await axiosInstance.get<Message[]>(`/messages/${userId}`);
             set({ messages: res.data });
-        } catch (error) {
+        } catch (error : any) {
             console.error(error);
-            if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data.message || "Ошибка загрузки сообщений");
-            }
+            toast.error(error.response.data.message || "Ошибка загрузки пользователей");
+
+            // if (axios.isAxiosError(error)) {
+            //     toast.error(error.response?.data.message || "Ошибка загрузки сообщений");
+            // }
         } finally {
             set({ isMessagesLoading: false });
         }
@@ -82,15 +81,17 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
         try {
             const res = await axiosInstance.post<Message>(
-                `/message/send/${selectedUser._id}`,
+                `/messages/send/${selectedUser._id}`,
                 data
             );
             set({ messages: [...messages, res.data] });
-        } catch (error) {
+        } catch (error : any) {
             console.error(error);
-            if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data.message || "Ошибка отправки сообщения");
-            }
+            toast.error(error.response.data.message || "Ошибка загрузки пользователей");
+
+            // if (axios.isAxiosError(error)) {
+            //     toast.error(error.response?.data.message || "Ошибка отправки сообщения");
+            // }
         }
     },
 
@@ -115,3 +116,5 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
     setSelectedUser: (selectedUser: User | null) => set({ selectedUser }),
 }));
+
+

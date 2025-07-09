@@ -27,6 +27,11 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
     // }, [logIn])
     // n@m.com 111111
     // lilo@mail.com 222222
+    // {
+//      "fullName": "John Doe",
+//      "email": "ndoe@gmail.com",
+//      "password": "1113333"
+// }
 
     return (
         <div className="h-screen grid lg:grid-cols-2">

@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { useAuthStore } from "../store/useAuthStore";
 import {SidebarSkeleton} from "./skeletons/SidebarSkeleton";
 import { Users } from "lucide-react";
 
 export const Sidebar = () => {
-  const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
+  const { users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore();
 
   const { onlineUsers } = useAuthStore();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
-  useEffect(() => {
-    getUsers();
-  }, [getUsers]);
+  // useEffect(() => {
+  //   getUsers()
+  //   console.log(filteredUsers)
+  // }, []);
+  console.log(users)
 
   const filteredUsers = showOnlineOnly
     ? users.filter((user) => onlineUsers.includes(user._id))
@@ -43,7 +45,8 @@ export const Sidebar = () => {
       </div>
 
       <div className="overflow-y-auto w-full py-3">
-        {filteredUsers?.map((user) => (
+        {filteredUsers.length !== 0 ?
+      filteredUsers.map((user) => (
           <button
             key={user._id}
             onClick={() => setSelectedUser(user)}
@@ -75,11 +78,12 @@ export const Sidebar = () => {
               </div>
             </div>
           </button>
-        ))}
+        )) :   <div className="text-center text-zinc-500 py-4">No online users</div>
+      }
 
-        {filteredUsers.length === 0 && (
-          <div className="text-center text-zinc-500 py-4">No online users</div>
-        )}
+        {/* {filteredUsers.length === 0 && (
+          
+        )} */}
       </div>
     </aside>
   );
