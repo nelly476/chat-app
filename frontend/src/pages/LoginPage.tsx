@@ -34,6 +34,7 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
 // }
 // rashid@mail.com 111111
 //
+// 1
 
     return (
         <div className="h-screen grid lg:grid-cols-2">
