@@ -37,7 +37,7 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
 // rashid@mail.com 111111
 
 // add some changes
-// add some more shit
+
     return (
         <div className="h-screen grid lg:grid-cols-2">
       {/* Left Side - Form */}
