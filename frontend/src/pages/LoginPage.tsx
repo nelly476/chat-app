@@ -36,8 +36,6 @@ export const LoginPage:React.FC<LoginPageProps> = () => {
 
 // rashid@mail.com 111111
 
-// it's me
-
 // add some changes
 // add some more shit
     return (
