@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  backend:
+    image: nelly754/chat-backend:latest
+    container_name: backend
+    ports:
+      - "5001:5001"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/chat-app
+    depends_on:
+      - mongo
+
+  frontend:
+    image: nelly754/chat-frontend:latest
+    container_name: frontend
+    ports:
+      - "3000:4173"
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
